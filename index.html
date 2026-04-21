@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel | Network Firewall Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="light-theme">
+    <div class="mesh-background">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav class="top-nav glass">
+        <div class="logo">
+            <span class="logo-icon">🌿</span>
+            <h1>SENTINEL<span>BREEZE</span></h1>
+        </div>
+        <div class="system-status">
+            <span class="pulse-dot"></span>
+            NETWORK SECURE
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <section class="stats-container">
+            <div class="stat-card glass" id="stat-total">
+                <label>Total Packets</label>
+                <span class="value">0</span>
+            </div>
+            <div class="stat-card glass" id="stat-allowed">
+                <label>Allowed</label>
+                <span class="value success">0</span>
+            </div>
+            <div class="stat-card glass" id="stat-blocked">
+                <label>Blocked</label>
+                <span class="value danger">0</span>
+            </div>
+            <div class="stat-card glass security-level">
+                <label>Security Level</label>
+                <span class="value level-high">HIGH</span>
+            </div>
+        </section>
+
+        <div class="main-grid">
+            <section class="panel rule-panel glass">
+                <div class="panel-header">
+                    <h2>Configured Rules</h2>
+                    <button id="add-rule-btn" class="btn-primary">+ Add Rule</button>
+                </div>
+                <div class="table-container">
+                    <table id="rules-table">
+                        <thead>
+                            <tr>
+                                <th>Direction</th>
+                                <th>Proto</th>
+                                <th>Port</th>
+                                <th>Action</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rules-body">
+                            <!-- Rules dynamic injection -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel traffic-panel glass">
+                <div class="panel-header">
+                    <h2>Live Traffic Stream</h2>
+                    <div class="log-controls">
+                        <span id="log-status">Streaming...</span>
+                    </div>
+                </div>
+                <div class="log-container" id="traffic-logs">
+                    <!-- Logs dynamic injection -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Add Rule Modal -->
+    <div id="rule-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <h3>Add New Firewall Rule</h3>
+            <form id="add-rule-form">
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="rule-desc" placeholder="e.g., Block Web Traffic" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Direction</label>
+                        <select id="rule-dir">
+                            <option value="inbound">Inbound</option>
+                            <option value="outbound">Outbound</option>
+                            <option value="ANY">Any</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Protocol</label>
+                        <select id="rule-proto">
+                            <option value="TCP">TCP</option>
+                            <option value="UDP">UDP</option>
+                            <option value="ICMP">ICMP</option>
+                            <option value="ANY">Any</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Port</label>
+                        <input type="text" id="rule-port" placeholder="e.g., 80 or ANY" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Action</label>
+                        <select id="rule-action">
+                            <option value="allow">Allow</option>
+                            <option value="block">Block</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="close-modal" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Apply Rule</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Command Export Modal -->
+    <div id="command-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <h3>Windows Firewall Command</h3>
+            <p>Run this in PowerShell as Administrator to apply this rule to your system:</p>
+            <div class="command-box">
+                <code id="generated-command"></code>
+            </div>
+            <div class="modal-actions">
+                <button id="close-command-modal" class="btn-primary">Got it</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
